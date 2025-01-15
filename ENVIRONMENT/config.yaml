@@ -1,0 +1,58 @@
+Policy:
+  Masked: False  # Whether to use the mask policy
+  Number_of_actions: 6  # Number of action. It must be 6 or 10
+
+Layout:
+  Same: True  # Whether to train all episodes in one layout
+  figure: [[1.,0.66363335],[0.47641606 ,1.],[0.,0.61137391],[0.23802698 ,0.],[0.83386657 ,0.03373406]]  # Layout to train on. It does not have to be scaled.
+  Number_vertices: 5  # Number of vertices of the layout. Not relevant if 'same' == True.
+  hop: 0.025  # Step size of the agent forward and backwards. It does not have to be scaled.
+  cell_size: 0.05  # Cell size. It does not have to be scaled.
+  rotation_angle: 8  # Rotation angle for the agent. In degrees.
+  width: 0.2  # Width of the tractor. It does not have to be scaled.
+  height: 0.1  # Height of the tractor. It does not have to be scaled.
+  area: 1.5  # Area of the layout. Not relevant if 'same' == True
+
+Penalties:
+  n_step: 0.25  # Penalty for each step done.
+  repeated_cell: 0  # Penalty for each cell already passed.
+  out_bounds: 5  # Penalty for each time the tractor goes out of bounds. Not relevant if 'Masked' == True
+  sparse_reward: all_cells  # Sparse reward for the agent. It must be number or all_cells.
+  pass_cell: 1  # Reward for each passed cell.
+
+Action_predictor:
+  net_arch_vf: [956,300,150]  # Feedforward layer of the value-based network of PPO
+  net_arch_pi: [956,300,150]  # Feedforward layer of the action predictor network of PPO
+
+PPO_args:
+  clip_range: 0.25  # clip range for the PPO algorithm. Check https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+  gae_lambda: 0.85  # gae lambda for the PPO algorithm. Check https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+  ent_coef: 0.05  # ent coef for the PPO algorithm. Check https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+  learning_rate: 0.0003  # learning rate for the PPO algorithm. Check https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+  # More args can be added. Check https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+
+Feature_extractor:
+  n_encoders_concatenated: 5  # Number of encoders to stack to process the concatenation of all previous feature embeddings. 
+  n_encoders_big: 3  # Number of encoders to stack to process the grid cells.
+  n_encoders_small: 2  # Number of encoders to stack to process the tractor position and vertices of the layout.
+  embedded_dim_small: 128  # Embedding dimension of the tractor position and vertices of the layout.
+  embedded_dim_big: 700  # Embedding dimension of the grid cells.
+  num_heads_concatenated: 4  # Number of heads to use in the encoders to process concatenated previous feature embeddings. Constraint: embedded_dim_big+2*embedd_dim_small % num_heads_concatenated == 0
+  num_heads_big: 20  # Number of heads to use in the encoders to process tractor position and vertices of the layout. Constraint: embedded_dim_big % num_heads_big == 0
+  num_heads_small: 16  # Number of heads to use in the encoders to process grid cells. Constraint: embedded_dim_small % num_heads_small == 0
+
+Training:
+  new: True  # Whether to start a new training or retrain the model in 'load_model'.
+  Max_steps: 1000  # Number of maximum steps the tractor can take before truncating the episode.
+  Time_step_per_iter: 30000  # Number of time steps before finishing the training and saving the model.
+  N_iters: 10000  # Number of training to do.
+  N_step_per_render: 0  # Number of steps between renders of the training
+  name_saved_model: no_mask  # Name of the saved model.
+  device: cuda  # Device in which the training is done.
+  load_model: prueba  # Name of the model to be loaded. Not relevant if 'new' == True. 137.85
+
+
+
+
+
+
