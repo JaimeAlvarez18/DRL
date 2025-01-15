@@ -45,4 +45,6 @@ The outputs of the feature extractor will be passed to the action predictor, whi
 
 - [masked_PPO_policy.py](ENVIRONMENT/masked_PPO_policy.py). A modification of the PPO policy has been made to avoid the agent from going out of bounds. For each step, the result of all possible actions are calculated, and if the result of an actions makes the agent go out of bounds, the probability of selecting that action is set to -inf. PPO policy is used in stochastic way, meaning that the action selection will be made based on the probabilities of each action. On the other hand deterministic selection would always choose the action with highest probability.
 
+# 👥 Author
+* Jaime Alvarez Uruena     [@JaimeAlvarez18](https://github.com/JaimeAlvarez18)
 
